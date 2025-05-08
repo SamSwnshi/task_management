@@ -115,9 +115,9 @@ const Dashboard = () => {
       </div>
 
       {loading ? (
-        <p>Loading tasks...</p>
+         <p className="text-center text-gray-600 text-lg mt-8">Loading your data...</p>
       ) : tasks.length === 0 ? (
-        <p>No tasks to show.</p>
+        <p className="text-center text-gray-600 text-lg mt-8">No tasks to show.</p>
       ) : (
         <ul className="space-y-4">
           {tasks.map((task) => (

@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import api from "../config/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await api.post("/login", { email, password });
       localStorage.setItem("token", response.data.token);
-      alert("Login Successfully");
+      toast.success("Login Successful!");
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
+      toast.error(
+        error.response?.data?.message || "Login failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,9 +69,14 @@ const Login = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+          disabled={loading}
+          className={`w-full py-2 px-4 rounded-md transition text-white ${
+            loading
+              ? "bg-blue-300 cursor-not-allowed"
+              : "bg-blue-500 hover:bg-blue-600"
+          }`}
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
 
         <p className="text-sm text-center mt-4">

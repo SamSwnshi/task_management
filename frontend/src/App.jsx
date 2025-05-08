@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter  as Router, Routes, Route } from "react-router-dom"
-import Login from './Component/Login';
+import Login from './Component/Login.jsx';
 import Register from './Component/Register';
 import Dashboard from './Component/Dashboard';
 

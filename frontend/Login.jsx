@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../config/api";
+import api from "./src/config/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -11,13 +11,13 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Login form submitted");
     setLoading(true);
-
     try {
       const response = await api.post("/login", { email, password });
-      const { token, user } = response.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", user.id);
+      console.log("Login response token:", response.data.token);
+      console.log("Login response:", response);
+      localStorage.setItem("token", response.data.token);
       toast.success("Login Successful!");
       navigate("/dashboard");
     } catch (error) {

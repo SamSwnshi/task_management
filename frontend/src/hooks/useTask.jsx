@@ -1,28 +1,41 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../config/api";
 import { toast } from "react-toastify";
 
-const useTask = () => {
-  const [task, setTask] = useState([]);
-  const [loading, setLoading] = useState(false);
+const useTask = (status = "All") => {
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const fetchTask = async () => {
+    const fetchTasks = async () => {
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        toast.error("User ID not found. Please log in again.");
+        setLoading(false);
+        return;
+      }
+
       try {
-        const response = await api.get("/tasks");
-        setTask(response.data);
+        const response = await api.get("/task", {
+          params: { userId, status },
+        });
+
+        if (response.data.success) {
+          setTasks(response.data.data);
+        } else {
+          toast.error(response.data.message || "Failed to fetch tasks.");
+        }
       } catch (error) {
-        toast.error(
-          error.response?.data?.message || "Failed to Fetch the Task!"
-        );
-      }finally{
-        setLoading(false)
+        toast.error(error.response?.data?.message || "Failed to fetch tasks.");
+      } finally {
+        setLoading(false);
       }
     };
-    fetchTask()
-  }, []);
-  return (
-    {task,setTask,loading}
-  );
+
+    fetchTasks();
+  }, [status]);
+
+  return { tasks, setTasks, loading };
 };
 
 export default useTask;

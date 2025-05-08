@@ -14,7 +14,7 @@ const App = () => {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/register' element={<Register />} />
       </Routes>
-      <ToastContainer />
+      <ToastContainer position='top-center' autoClose={2000}/>
     </Router>
   )
 }

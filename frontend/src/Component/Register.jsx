@@ -17,7 +17,7 @@ const Register = () => {
       const response = await api.post("/register", { email, password });
       localStorage.setItem("token", response.data.token);
       toast.success("Registered Successfully!");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       toast.error(
         error.response?.data?.message || "Registration failed. Please try again."

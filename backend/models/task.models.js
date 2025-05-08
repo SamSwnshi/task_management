@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema(
@@ -11,8 +12,8 @@ const taskSchema = new mongoose.Schema(
     },
     priority: {
       type: String,
-      enum: ["Low", "Medium", "High"],
-      default: "Medium",
+      enum: ['high', 'medium', 'low'],
+      default: "medium",
     },
     createdAt: { type: Date, default: Date.now },
     userId: {

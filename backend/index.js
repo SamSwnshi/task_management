@@ -3,15 +3,20 @@ import dotenv from "dotenv"
 import cors from "cors"
 import config from "./db/config.js";
 import userRoutes from "./routes/user.routes.js";
+import taskRoutes from "./routes/task.routes.js"
 dotenv.config()
 
 const port = process.env.PORT || 8080;
 const app = express()
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173", 
+    credentials: true
+}));
 app.use(express.json())
 
 app.use("/api",userRoutes)
+app.use("/api/task",taskRoutes)
 
 
 app.listen(port,()=>{
